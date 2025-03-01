@@ -3,6 +3,7 @@ import numpy as np
 import yfinance as yf
 import FinanceDataReader as fdr
 from datetime import datetime, timedelta
+from discord import send_message
 
 # 기술적 분석 함수
 def calculate_macd(data, short_window=12, long_window=26, signal_window=9):
@@ -171,13 +172,14 @@ def backtest_with_stop_loss(symbol, start="2024-01-01", stop_loss=-5):
         today -= timedelta(days=today.weekday() - 4)
     today_str = today.strftime("%Y-%m-%d")
     
-    print(today_str, df.index[-1].strftime("%Y-%m-%d"))
+    #print(today_str, df.index[-1].strftime("%Y-%m-%d"))
     if today_str == df.index[-1].strftime("%Y-%m-%d"):
         #today_signals = df.loc[today_str, ["buy_signal_growth", "sell_signal_growth", "buy_signal_bluechip", "sell_signal_bluechip"]]
         #if today_signals.any():
-        print(df.loc[today_str])
+        #print(df.loc[today_str])
+        signal = df.loc[today_str]
 
-    return total_return, trade_log
+    return total_return, trade_log, signal
 
 # 백테스트 실행
 symbols = ['TSLA', 'PLTR', 'ACHR', 'O', 'AAPL']
@@ -186,10 +188,12 @@ filtered_symbols = symbols
 #filtered_symbols = filter_stocks(financials)
 #print(filtered_symbols)
 results = {}
+signals = {}
 
 for symbol in filtered_symbols:
-    total_return, trades = backtest_with_stop_loss(symbol, start="2025-01-01")
+    total_return, trades, signal = backtest_with_stop_loss(symbol, start="2025-01-01")
     results[symbol] = total_return
+    signals[symbol] = signal
     print(f"\n📊 [{symbol}] 손절 적용 후 총 수익률: {total_return:.2f}%")
     for trade in trades[-5:]:
         print(trade)
@@ -201,3 +205,7 @@ for symbol, return_rate in sorted_results:
 
 best_symbol = sorted_results[0][0]
 print(f"\n🚀 가장 높은 수익률을 기록한 종목: {best_symbol}")
+
+send_message(signals)
+
+#print(signals)
