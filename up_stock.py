@@ -3,7 +3,7 @@ import numpy as np
 import yfinance as yf
 import FinanceDataReader as fdr
 from datetime import datetime, timedelta
-from discord import send_message
+from discord import send_message, send_message_table
 
 # 기술적 분석 함수
 def calculate_macd(data, short_window=12, long_window=26, signal_window=9):
@@ -179,7 +179,7 @@ def backtest_with_stop_loss(symbol, start="2024-01-01", stop_loss=-5):
         #print(df.loc[today_str])
         signal = df.loc[today_str]
 
-    return total_return, trade_log, signal
+    return total_return, trade_log, signal, df
 
 # 백테스트 실행
 symbols = ['TSLA', 'PLTR', 'ACHR', 'O', 'AAPL']
@@ -189,11 +189,13 @@ filtered_symbols = symbols
 #print(filtered_symbols)
 results = {}
 signals = {}
+stock_df = {}
 
 for symbol in filtered_symbols:
-    total_return, trades, signal = backtest_with_stop_loss(symbol, start="2025-01-01")
+    total_return, trades, signal, df = backtest_with_stop_loss(symbol, start="2025-01-01")
     results[symbol] = total_return
     signals[symbol] = signal
+    stock_df[symbol] = df
     print(f"\n📊 [{symbol}] 손절 적용 후 총 수익률: {total_return:.2f}%")
     for trade in trades[-5:]:
         print(trade)
@@ -207,5 +209,6 @@ best_symbol = sorted_results[0][0]
 print(f"\n🚀 가장 높은 수익률을 기록한 종목: {best_symbol}")
 
 send_message(signals)
+send_message_table(stock_df)
 
 #print(signals)
