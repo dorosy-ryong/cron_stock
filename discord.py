@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import time
 
 def send_message(message):
     WEBHOOK_URL = "https://discord.com/api/webhooks/1345365931186196510/Gk9d1Nv-c03szRIdpqdRbvyHWVxu0JwI1QTsvUDTwWTciHmidBEMYos5Ua5JOxPZvOK4"  # 여기에 복사한 웹훅 URL 입력
@@ -13,6 +14,7 @@ def send_message(message):
 
         if response.status_code == 204:
             print("✅ 메시지 전송 성공!")
+            time.sleep(1)
         else:
             print(f"❌ 전송 실패: {response.status_code}, {response.text}")
 
@@ -49,5 +51,6 @@ def send_message_table(message):
 
     if response.status_code == 204:
         print("✅ 메시지 전송 성공!")
+        time.sleep(1)
     else:
         print(f"❌ 전송 실패: {response.status_code}, {response.text}")
