@@ -182,7 +182,7 @@ def backtest_with_stop_loss(symbol, start="2024-01-01", stop_loss=-5):
     return total_return, trade_log, signal, df
 
 # 백테스트 실행
-symbols = ['TSLA', 'PLTR', 'ACHR', 'O', 'AAPL']
+symbols = ['QQQ', 'DIA', 'TSLA', 'PLTR', 'ACHR', 'JOBY', 'QUBT', 'RGTI', 'SMR', 'OKLO', 'O']
 filtered_symbols = symbols
 #financials = get_fundamentals(symbols)
 #filtered_symbols = filter_stocks(financials)
