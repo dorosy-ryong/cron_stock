@@ -39,13 +39,14 @@ def send_message_table(message):
 
     # Markdown 형식으로 테이블 생성
     # 수동으로 Markdown 형식의 테이블 생성
-    markdown_table = "종목 | Buy Signal Today | Sell Signal Today | Buy Signal 1일전 | Sell Signal 1일전 | Buy Signal 2일전 | Sell Signal 2일전\n"
+    markdown_table = f"종목 | Buy Signal {last_3_days.index[2].strftime("%Y-%m-%d")} | Sell Signal {last_3_days.index[2].strftime("%Y-%m-%d")} | Buy Signal {last_3_days.index[1].strftime("%Y-%m-%d")} | Sell Signal {last_3_days.index[1].strftime("%Y-%m-%d")} | Buy Signal {last_3_days.index[0].strftime("%Y-%m-%d")} | Sell Signal {last_3_days.index[0].strftime("%Y-%m-%d")}\n"
     markdown_table += "---|-------------|-------------|------------|-----------|-------------|------------\n"
 
     for row in final_df.values:
         markdown_table += " | ".join(map(str, row)) + "\n"
 
-    print(markdown_table)
+    #print(last_3_days.index)
+    #print(markdown_table)
 
     response = requests.post(WEBHOOK_URL, json={'content': "```markdown\n" + markdown_table + "```"})
 

@@ -172,6 +172,8 @@ def backtest_with_stop_loss(symbol, start="2024-01-01", stop_loss=-5):
         today -= timedelta(days=today.weekday() - 4)
     today_str = today.strftime("%Y-%m-%d")
     
+    signal = df.iloc[-1]
+    #print(signal)
     #print(today_str, df.index[-1].strftime("%Y-%m-%d"))
     if today_str == df.index[-1].strftime("%Y-%m-%d"):
         #today_signals = df.loc[today_str, ["buy_signal_growth", "sell_signal_growth", "buy_signal_bluechip", "sell_signal_bluechip"]]
@@ -182,7 +184,7 @@ def backtest_with_stop_loss(symbol, start="2024-01-01", stop_loss=-5):
     return total_return, trade_log, signal, df
 
 # 백테스트 실행
-symbols = ['QQQ', 'DIA', 'TSLA', 'PLTR', 'ACHR', 'JOBY', 'QUBT', 'RGTI', 'SMR', 'OKLO', 'O']
+symbols = ['QQQ', 'DIA', 'TSLA', 'PLTR', 'ACHR', 'JOBY', 'QUBT', 'RGTI', 'SMR', 'OKLO', 'O', 'SCHD']
 filtered_symbols = symbols
 #financials = get_fundamentals(symbols)
 #filtered_symbols = filter_stocks(financials)
