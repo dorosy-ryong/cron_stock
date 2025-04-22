@@ -3,7 +3,7 @@ import numpy as np
 import yfinance as yf
 import FinanceDataReader as fdr
 from datetime import datetime, timedelta
-from discord import send_message, send_message_table
+#from discord import send_message, send_message_table
 
 # 기술적 분석 함수
 def calculate_macd(data, short_window=12, long_window=26, signal_window=9):
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     best_symbol = sorted_results[0][0]
     print(f"\n🚀 가장 높은 수익률을 기록한 종목: {best_symbol}")
 
-    send_message(signals)
-    send_message_table(stock_df)
+    #send_message(signals)
+    #send_message_table(stock_df)
 
     #print(signals)
