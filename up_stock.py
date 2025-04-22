@@ -183,34 +183,35 @@ def backtest_with_stop_loss(symbol, start="2024-01-01", stop_loss=-5):
 
     return total_return, trade_log, signal, df
 
-# 백테스트 실행
-symbols = ['QQQ', 'DIA', 'TSLA', 'PLTR', 'ACHR', 'JOBY', 'QUBT', 'RGTI', 'SMR', 'OKLO', 'O', 'SCHD']
-filtered_symbols = symbols
-#financials = get_fundamentals(symbols)
-#filtered_symbols = filter_stocks(financials)
-#print(filtered_symbols)
-results = {}
-signals = {}
-stock_df = {}
+if __name__ == "__main__":
+    # 백테스트 실행
+    symbols = ['QQQ', 'DIA', 'TSLA', 'PLTR', 'ACHR', 'JOBY', 'QUBT', 'RGTI', 'SMR', 'OKLO', 'O', 'SCHD']
+    filtered_symbols = symbols
+    #financials = get_fundamentals(symbols)
+    #filtered_symbols = filter_stocks(financials)
+    #print(filtered_symbols)
+    results = {}
+    signals = {}
+    stock_df = {}
 
-for symbol in filtered_symbols:
-    total_return, trades, signal, df = backtest_with_stop_loss(symbol, start="2025-01-01")
-    results[symbol] = total_return
-    signals[symbol] = signal
-    stock_df[symbol] = df
-    print(f"\n📊 [{symbol}] 손절 적용 후 총 수익률: {total_return:.2f}%")
-    for trade in trades[-5:]:
-        print(trade)
+    for symbol in filtered_symbols:
+        total_return, trades, signal, df = backtest_with_stop_loss(symbol, start="2025-01-01")
+        results[symbol] = total_return
+        signals[symbol] = signal
+        stock_df[symbol] = df
+        print(f"\n📊 [{symbol}] 손절 적용 후 총 수익률: {total_return:.2f}%")
+        for trade in trades[-5:]:
+            print(trade)
 
-sorted_results = sorted(results.items(), key=lambda x: x[1], reverse=True)
-print("\n📈 필터링 후 수익률 TOP 종목:")
-for symbol, return_rate in sorted_results:
-    print(f"{symbol}: {return_rate:.2f}%")
+    sorted_results = sorted(results.items(), key=lambda x: x[1], reverse=True)
+    print("\n📈 필터링 후 수익률 TOP 종목:")
+    for symbol, return_rate in sorted_results:
+        print(f"{symbol}: {return_rate:.2f}%")
 
-best_symbol = sorted_results[0][0]
-print(f"\n🚀 가장 높은 수익률을 기록한 종목: {best_symbol}")
+    best_symbol = sorted_results[0][0]
+    print(f"\n🚀 가장 높은 수익률을 기록한 종목: {best_symbol}")
 
-send_message(signals)
-send_message_table(stock_df)
+    send_message(signals)
+    send_message_table(stock_df)
 
-#print(signals)
+    #print(signals)
